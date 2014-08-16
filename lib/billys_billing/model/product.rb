@@ -1,7 +1,7 @@
 require 'billys_billing/model'
 module BillysBilling
   class Model
-    class Account < Model
+    class Product < Model
       include BelongsToOrganization
     end
   end

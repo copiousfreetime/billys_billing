@@ -31,7 +31,10 @@ module BillysBilling
     end
   end
 end
-#require 'billys_billing/model/product'
+
+require 'billys_billing/model/belongs_to_organization'
+require 'billys_billing/model/account'
+require 'billys_billing/model/contact'
 require 'billys_billing/model/organization'
+require 'billys_billing/model/product'
 require 'billys_billing/model/user'
-#require 'billys_billing/model/account'
