@@ -5,7 +5,7 @@ module BillysBilling
     include BillysBilling::Utils
     attr_reader :client
 
-    def initialize( data, client: BillysBilling.client, &block )
+    def initialize( data = {}, client: BillysBilling.client, &block )
       @client = client
       super( data )
     end
