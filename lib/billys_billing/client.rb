@@ -7,6 +7,7 @@ require 'billys_billing/client/contacts'
 require 'billys_billing/client/organizations'
 require 'billys_billing/client/postings'
 require 'billys_billing/client/products'
+require 'billys_billing/client/transactions'
 require 'billys_billing/client/users'
 
 module BillysBilling
@@ -18,6 +19,7 @@ module BillysBilling
     include BillysBilling::Client::Organizations
     include BillysBilling::Client::Postings
     include BillysBilling::Client::Products
+    include BillysBilling::Client::Transactions
     include BillysBilling::Client::Users
 
     def self.url
