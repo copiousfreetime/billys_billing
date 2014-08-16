@@ -28,6 +28,8 @@ end
 require 'billys_billing/model/belongs_to_organization'
 require 'billys_billing/model/account'
 require 'billys_billing/model/contact'
+require 'billys_billing/model/invoice'
+require 'billys_billing/model/invoice_line'
 require 'billys_billing/model/organization'
 require 'billys_billing/model/posting'
 require 'billys_billing/model/product'

@@ -5,6 +5,8 @@ require 'billys_billing/utils'
 
 require 'billys_billing/client/accounts'
 require 'billys_billing/client/contacts'
+require 'billys_billing/client/invoices'
+require 'billys_billing/client/invoice_lines'
 require 'billys_billing/client/organizations'
 require 'billys_billing/client/postings'
 require 'billys_billing/client/products'
@@ -18,6 +20,8 @@ module BillysBilling
 
     include BillysBilling::Client::Accounts
     include BillysBilling::Client::Contacts
+    include BillysBilling::Client::InvoiceLines
+    include BillysBilling::Client::Invoices
     include BillysBilling::Client::Organizations
     include BillysBilling::Client::Postings
     include BillysBilling::Client::Products
