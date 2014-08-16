@@ -1,0 +1,34 @@
+require 'map'
+module BillysBilling
+  class Model < ::Map
+    def initialize( data, client: BillysBilling.client, &block )
+      @client = client
+      super( data )
+    end
+
+    private
+
+    def snake_to_camel( word )
+      word = word.to_s
+      return nil unless word.index('_')
+      leader, *parts = word.split('_')
+      parts = parts.map { |p| p.capitalize }
+      parts.unshift( leader )
+      parts.join('').to_sym
+    end
+
+    def method_missing( name, *args, &block )
+      super
+    rescue NoMethodError => nme
+      raise nme unless camel = snake_to_camel( name )
+      begin
+        super( camel, *args, &block )
+      rescue NoMethodError => _
+        raise nme
+      end
+    end
+  end
+end
+#require 'billys_billing/model/product'
+require 'billys_billing/model/organization'
+#require 'billys_billing/model/account'

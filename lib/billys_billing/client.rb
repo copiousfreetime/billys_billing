@@ -3,11 +3,13 @@ require 'faraday_middleware'
 require 'billys_billing/x_access_token_authentication'
 require 'billys_billing/client/accounts'
 require 'billys_billing/client/organization'
+require 'billys_billing/client/products'
 module BillysBilling
   class Client
 
     include BillysBilling::Client::Accounts
     include BillysBilling::Client::Organization
+    include BillysBilling::Client::Products
 
     def self.url
       "https://api.billysbilling.com/v2"
@@ -59,10 +61,13 @@ module BillysBilling
     private
 
     def request(method, path, body_or_params, headers)
-
       @last_response = response = connection.send(method, URI::Parser.new.escape(path.to_s), body_or_params, headers )
       response.body
     end
+  end
+
+  def self.client(url: ::BillysBilling::Client.url, token: ::BillysBilling::Client.token)
+    @client ||= ::BillysBilling::Client.new( url: url, token: token )
   end
 end
 
