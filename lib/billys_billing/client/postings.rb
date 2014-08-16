@@ -2,8 +2,9 @@ require 'billys_billing/model/posting'
 module BillysBilling
   class Client
     module Postings
-      def postings
-        get('postings')['postings'].map { |u| Model::Posting.new( u, client: self ) }
+      def postings( filters = {} )
+        path = path_with_query_string( 'postings', filters )
+        get( path )['postings'].map { |a| Model::Posting.new( a, client: self ) }
       end
 
       def posting( id )
