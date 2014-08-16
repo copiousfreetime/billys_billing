@@ -5,6 +5,7 @@ require 'billys_billing/x_access_token_authentication'
 require 'billys_billing/client/accounts'
 require 'billys_billing/client/contacts'
 require 'billys_billing/client/organizations'
+require 'billys_billing/client/postings'
 require 'billys_billing/client/products'
 require 'billys_billing/client/users'
 
@@ -15,6 +16,7 @@ module BillysBilling
     include BillysBilling::Client::Accounts
     include BillysBilling::Client::Contacts
     include BillysBilling::Client::Organizations
+    include BillysBilling::Client::Postings
     include BillysBilling::Client::Products
     include BillysBilling::Client::Users
 
