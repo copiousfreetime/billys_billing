@@ -1,6 +1,7 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'billys_billing/x_access_token_authentication'
+require 'billys_billing/utils'
 
 require 'billys_billing/client/accounts'
 require 'billys_billing/client/contacts'
@@ -13,6 +14,7 @@ require 'billys_billing/client/users'
 module BillysBilling
   class Client
     class Error < ::StandardError; end
+    include BillysBilling::Utils
 
     include BillysBilling::Client::Accounts
     include BillysBilling::Client::Contacts
@@ -77,6 +79,16 @@ module BillysBilling
       return body if response.success?
       raise Error, body
     end
+
+    def path_with_query_string( start, filter )
+      if filter.size > 0 then
+        query = filter.map { |k,v| "#{snake_to_camel(k)}=#{v}" }.join('&')
+        [ start, query ].join('?')
+      else
+        start
+      end
+    end
+
   end
 
   def self.client(url: ::BillysBilling::Client.url, token: ::BillysBilling::Client.token)

@@ -1,6 +1,8 @@
 require 'map'
+require 'billys_billing/utils'
 module BillysBilling
   class Model < ::Map
+    include BillysBilling::Utils
     attr_reader :client
 
     def initialize( data, client: BillysBilling.client, &block )
@@ -10,21 +12,12 @@ module BillysBilling
 
     private
 
-    def snake_to_camel( word )
-      word = word.to_s
-      return nil unless word.index('_')
-      leader, *parts = word.split('_')
-      parts = parts.map { |p| p.capitalize }
-      parts.unshift( leader )
-      parts.join('').to_sym
-    end
-
     def method_missing( name, *args, &block )
       super
     rescue NoMethodError, NameError => error
       raise error unless camel = snake_to_camel( name )
       begin
-        super( camel, *args, &block )
+        super( camel.to_sym, *args, &block )
       rescue NoMethodError, NameError => _
         raise error
       end
