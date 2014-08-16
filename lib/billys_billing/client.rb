@@ -5,6 +5,7 @@ require 'billys_billing/utils'
 
 require 'billys_billing/client/accounts'
 require 'billys_billing/client/contacts'
+require 'billys_billing/client/currencies'
 require 'billys_billing/client/invoices'
 require 'billys_billing/client/invoice_lines'
 require 'billys_billing/client/organizations'
@@ -20,6 +21,7 @@ module BillysBilling
 
     include BillysBilling::Client::Accounts
     include BillysBilling::Client::Contacts
+    include BillysBilling::Client::Currencies
     include BillysBilling::Client::InvoiceLines
     include BillysBilling::Client::Invoices
     include BillysBilling::Client::Organizations
