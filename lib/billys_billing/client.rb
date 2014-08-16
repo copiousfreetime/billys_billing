@@ -4,12 +4,15 @@ require 'billys_billing/x_access_token_authentication'
 require 'billys_billing/client/accounts'
 require 'billys_billing/client/organization'
 require 'billys_billing/client/products'
+require 'billys_billing/client/users'
 module BillysBilling
   class Client
+    class Error < ::StandardError; end
 
     include BillysBilling::Client::Accounts
     include BillysBilling::Client::Organization
     include BillysBilling::Client::Products
+    include BillysBilling::Client::Users
 
     def self.url
       "https://api.billysbilling.com/v2"
@@ -62,7 +65,9 @@ module BillysBilling
 
     def request(method, path, body_or_params, headers)
       @last_response = response = connection.send(method, URI::Parser.new.escape(path.to_s), body_or_params, headers )
-      response.body
+      body = response.body
+      return body if response.success?
+      raise Error, body
     end
   end
 

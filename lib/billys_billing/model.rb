@@ -1,6 +1,8 @@
 require 'map'
 module BillysBilling
   class Model < ::Map
+    attr_reader :client
+
     def initialize( data, client: BillysBilling.client, &block )
       @client = client
       super( data )
@@ -19,16 +21,17 @@ module BillysBilling
 
     def method_missing( name, *args, &block )
       super
-    rescue NoMethodError => nme
-      raise nme unless camel = snake_to_camel( name )
+    rescue NoMethodError, NameError => error
+      raise error unless camel = snake_to_camel( name )
       begin
         super( camel, *args, &block )
-      rescue NoMethodError => _
-        raise nme
+      rescue NoMethodError, NameError => _
+        raise error
       end
     end
   end
 end
 #require 'billys_billing/model/product'
 require 'billys_billing/model/organization'
+require 'billys_billing/model/user'
 #require 'billys_billing/model/account'

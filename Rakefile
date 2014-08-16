@@ -9,6 +9,7 @@ This.homepage = "http://github.com/copiousfreetime/#{ This.name }"
 This.ruby_gemspec do |spec|
   spec.add_dependency( 'faraday', '~> 0.9' )
   spec.add_dependency( 'faraday_middleware', '~> 0.9' )
+  spec.add_dependency( 'map', '~> 6.5' )
   spec.add_dependency( 'sawyer', '~> 0.5')
   spec.add_development_dependency( 'rake'     , '~> 10.1')
   spec.add_development_dependency( 'minitest' , '~> 5.0' )
