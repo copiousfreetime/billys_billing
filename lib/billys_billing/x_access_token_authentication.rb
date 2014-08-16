@@ -4,7 +4,6 @@ module BillysBilling
 
     def call(env)
       env[:request_headers][AUTH_HEADER] ||= @token
-      puts env.inspect
       @app.call(env)
     end
 
