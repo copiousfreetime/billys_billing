@@ -1,7 +1,7 @@
 require 'billys_billing/model/organization'
 module BillysBilling
   class Client
-    module Organization
+    module Organizations
       def organization( id = nil )
         org_data = if id then
                      get( "organizations/#{id}" )['organization']

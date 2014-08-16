@@ -1,16 +1,20 @@
 require 'faraday'
 require 'faraday_middleware'
 require 'billys_billing/x_access_token_authentication'
+
 require 'billys_billing/client/accounts'
-require 'billys_billing/client/organization'
+require 'billys_billing/client/contacts'
+require 'billys_billing/client/organizations'
 require 'billys_billing/client/products'
 require 'billys_billing/client/users'
+
 module BillysBilling
   class Client
     class Error < ::StandardError; end
 
     include BillysBilling::Client::Accounts
-    include BillysBilling::Client::Organization
+    include BillysBilling::Client::Contacts
+    include BillysBilling::Client::Organizations
     include BillysBilling::Client::Products
     include BillysBilling::Client::Users
 
