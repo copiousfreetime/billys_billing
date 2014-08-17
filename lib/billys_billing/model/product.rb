@@ -5,10 +5,6 @@ module BillysBilling
       include BelongsToOrganization
       resource_name 'products'
       entity_name   'product'
-
-      def save
-        client.create_product( self )
-      end
     end
   end
 end

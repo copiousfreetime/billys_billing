@@ -28,6 +28,10 @@ module BillysBilling
       self.class.entity_name
     end
 
+    def save
+      client.create_entity( self )
+    end
+
    private
 
     def method_missing( name, *args, &block )

@@ -11,7 +11,7 @@ module BillysBilling
       end
 
       def find_products( q )
-        get_entities( Model::Product, "#{Model::Product.resource_name}?q=#{q}" )
+        find_entities( Model::Product, q )
       end
 
       def create_product( product )
