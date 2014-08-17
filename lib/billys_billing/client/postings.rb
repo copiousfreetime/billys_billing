@@ -3,13 +3,11 @@ module BillysBilling
   class Client
     module Postings
       def postings( filters = {} )
-        path = path_with_query_string( 'postings', filters )
-        get( path )['postings'].map { |a| Model::Posting.new( a, client: self ) }
+        get_entities( Model::Posting )
       end
 
       def posting( id )
-        posting_data = get("postings/#{id}")['posting']
-        Model::Posting.new( posting_data, client: self )
+        get_entity( Model::Posting, id )
       end
     end
   end

@@ -3,12 +3,11 @@ module BillysBilling
   class Client
     module Contacts
       def contacts
-        get('contacts')['contacts'].map { |u| Model::Contact.new( u, client: self ) }
+        get_entities( Model::Contact )
       end
 
       def contact( id )
-        contact_data = get("contacts/#{id}")['contact']
-        Model::Contact.new( contact_data, client: self )
+        get_entity( Model::Contact, id )
       end
     end
   end

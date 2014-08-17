@@ -3,12 +3,11 @@ module BillysBilling
   class Client
     module InvoiceLines
       def invoice_lines
-        get('invoice_lines')['invoice_lines'].map { |u| Model::InvoiceLine.new( u, client: self ) }
+        get_entities( Model::InvoiceLine )
       end
 
       def invoice_line( id )
-        invoice_line_data = get("invoice_lines/#{id}")['invoice_line']
-        Model::InvoiceLine.new( invoice_line_data, client: self )
+        get_entity( Model::InvoiceLine, id )
       end
     end
   end

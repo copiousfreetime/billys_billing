@@ -3,12 +3,11 @@ module BillysBilling
   class Client
     module Transactions
       def transactions
-        get('transactions')['transactions'].map { |u| Model::Transaction.new( u, client: self ) }
+        get_entities( Model::Transaction )
       end
 
       def transaction( id )
-        transaction_data = get("transactions/#{id}")['transaction']
-        Model::Transaction.new( transaction_data, client: self )
+        get_entity( Model::Transaction, id )
       end
     end
   end

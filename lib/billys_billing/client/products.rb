@@ -16,7 +16,7 @@ module BillysBilling
 
       def create_product( product )
         create_entity( product )
-     end
+      end
     end
   end
 end
