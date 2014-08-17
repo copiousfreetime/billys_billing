@@ -11,6 +11,7 @@ require 'billys_billing/client/invoice_lines'
 require 'billys_billing/client/organizations'
 require 'billys_billing/client/postings'
 require 'billys_billing/client/products'
+require 'billys_billing/client/product_prices'
 require 'billys_billing/client/transactions'
 require 'billys_billing/client/users'
 
@@ -26,6 +27,7 @@ module BillysBilling
     include BillysBilling::Client::Invoices
     include BillysBilling::Client::Organizations
     include BillysBilling::Client::Postings
+    include BillysBilling::Client::ProductPrices
     include BillysBilling::Client::Products
     include BillysBilling::Client::Transactions
     include BillysBilling::Client::Users
@@ -86,13 +88,47 @@ module BillysBilling
       raise Error, body
     end
 
-    def path_with_query_string( start, filter )
-      if filter.size > 0 then
-        query = filter.map { |k,v| "#{snake_to_camel(k)}=#{v}" }.join('&')
-        [ start, query ].join('?')
-      else
-        start
-      end
+    def to_api_json( entity_name, model )
+      { entity_name => camel_hash( model ) }.to_json
+    end
+
+    def key_map( model )
+      model.keys.each_with_object({}) { |key, h|
+        h[key] = snake_to_camel( key ) || key
+      }
+    end
+
+    def camel_hash( model )
+      camel_map = key_map( model )
+      Hash.new.tap { |h|
+        camel_map.each_pair do |snake, camel|
+          h[camel] = model.send( snake )
+        end
+      }
+    end
+
+    def get_entities( model, path = nil )
+      name = model.resource_name
+      path = path || name
+      data = get( path )[name]
+      data.map { |m| model.new( m, client: self ) }
+    end
+
+    def find_entities( model, query )
+      get_entities( model, "#{model.resource_name}?q=#{query}" )
+    end
+
+    def get_entity( model, id )
+      path = "#{model.resource_name}/#{id}"
+      data = get( path )[ model.entity_name ]
+      model_class.new(data, client: self )
+    end
+
+    def create_entity( entity )
+      name = entity.entity_name
+      json = to_api_json( entity.entity_name, entity )
+      data = post( entity.resource_name, body: json )[ name ].first
+      entity.class.new( data, client: self )
     end
 
   end

@@ -3,13 +3,20 @@ module BillysBilling
   class Client
     module Products
       def products
-        get('products')['products'].map { |u| Model::Product.new( u, client: self ) }
+        get_entities( Model::Product )
       end
 
       def product( id )
-        product_data = get("products/#{id}")['product']
-        Model::Product.new( product_data, client: self )
+        get_entity( Model::Product, id )
       end
+
+      def find_products( q )
+        get_entities( Model::Product, "#{Model::Product.resource_name}?q=#{q}" )
+      end
+
+      def create_product( product )
+        create_entity( product )
+     end
     end
   end
 end

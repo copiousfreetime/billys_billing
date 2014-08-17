@@ -1,13 +1,13 @@
 require 'billys_billing/model'
 module BillysBilling
   class Model
-    class Product < Model
+    class ProductPrice < Model
       include BelongsToOrganization
-      resource_name 'products'
-      entity_name   'product'
+      resource_name 'productPrices'
+      entity_name   'productPrice'
 
       def save
-        client.create_product( self )
+        client.create_product_price( self )
       end
     end
   end

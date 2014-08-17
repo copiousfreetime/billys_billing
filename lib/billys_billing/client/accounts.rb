@@ -2,13 +2,16 @@ require 'billys_billing/model/account'
 module BillysBilling
   class Client
     module Accounts
-      def accounts( filters = {} )
-        path = path_with_query_string( 'accounts', filters )
-        get( path )['accounts'].map { |a| Model::Account.new( a, client: self ) }
+      def accounts
+        get_entities( Model::Account )
       end
 
       def account( id )
-        Model::Account.new( get("accounts/#{id}"), client: self )
+        get_entity( Model::Account, id )
+      end
+
+      def find_accounts( q )
+        find_entities( Model::Account, q )
       end
     end
   end
