@@ -79,6 +79,28 @@ module BillysBilling
       request( :post, path, body, headers )
     end
 
+    def get_entities( model, path = nil )
+      path = path || model.resource_name
+      data = get( path )[model.resource_name]
+      data.map { |m| model.new( m, client: self ) }
+    end
+
+    def find_entities( model, query )
+      get_entities( model, "#{model.resource_name}?q=#{query}" )
+    end
+
+    def get_entity( model, id )
+      path = "#{model.resource_name}/#{id}"
+      data = get( path )[ model.entity_name ]
+      model_class.new(data, client: self )
+    end
+
+    def create_entity( entity )
+      json = to_api_json( entity.entity_name, entity )
+      data = post( entity.resource_name, body: json )[ entity.resource_name ].first
+      entity.class.new( data, client: self )
+    end
+
     private
 
     def request(method, path, body_or_params, headers)
@@ -105,30 +127,6 @@ module BillysBilling
           h[camel] = model.send( snake )
         end
       }
-    end
-
-    def get_entities( model, path = nil )
-      name = model.resource_name
-      path = path || name
-      data = get( path )[name]
-      data.map { |m| model.new( m, client: self ) }
-    end
-
-    def find_entities( model, query )
-      get_entities( model, "#{model.resource_name}?q=#{query}" )
-    end
-
-    def get_entity( model, id )
-      path = "#{model.resource_name}/#{id}"
-      data = get( path )[ model.entity_name ]
-      model_class.new(data, client: self )
-    end
-
-    def create_entity( entity )
-      name = entity.entity_name
-      json = to_api_json( entity.entity_name, entity )
-      data = post( entity.resource_name, body: json )[ name ].first
-      entity.class.new( data, client: self )
     end
 
   end
