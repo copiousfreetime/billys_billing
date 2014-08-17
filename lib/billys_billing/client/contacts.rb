@@ -9,6 +9,14 @@ module BillysBilling
       def contact( id )
         get_entity( Model::Contact, id )
       end
+
+      def find_contacts( q )
+        find_entities( Model::Contact, q )
+      end
+
+      def create_contact( contact )
+        create_entity( contact )
+      end
     end
   end
 end
