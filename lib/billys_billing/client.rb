@@ -126,7 +126,11 @@ module BillysBilling
       camel_map = key_map( model )
       Hash.new.tap { |h|
         camel_map.each_pair do |snake, camel|
-          h[camel] = model.send( snake )
+          value = model.send( snake )
+          if value.kind_of?( Array ) then
+            value = value.map { |v1| camel_hash( v1 ) }
+          end
+          h[camel] = value
         end
       }
     end

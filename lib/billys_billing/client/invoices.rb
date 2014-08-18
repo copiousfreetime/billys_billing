@@ -9,6 +9,14 @@ module BillysBilling
       def invoice( id )
         get_entity( Model::Invoice, id )
       end
+
+      def find_invoices( q )
+        find_entities( Model::Invoice, q )
+      end
+
+      def create_invoice( invoice )
+        create_entity( invoice )
+      end
     end
   end
 end

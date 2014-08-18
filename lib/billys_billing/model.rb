@@ -32,7 +32,7 @@ module BillysBilling
       client.create_entity( self )
     end
 
-   private
+    private
 
     def method_missing( name, *args, &block )
       super
